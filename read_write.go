@@ -32,7 +32,7 @@ func ReadMessage(conn net.Conn) ([]byte, error) {
 	contentSize := int(totalSize) - headerSize
 
 	// Ensure a reasonable time for reading the message.
-	err = conn.SetReadDeadline(time.Now().Add(10 * time.Second))
+	err = conn.SetReadDeadline(time.Now().Add(60 * time.Second))
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func WriteMessage(conn net.Conn, data []byte) error {
 		return errors.New("content is too large")
 	}
 
-	err := conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+	err := conn.SetWriteDeadline(time.Now().Add(60 * time.Second))
 	if err != nil {
 		return err
 	}

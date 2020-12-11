@@ -14,6 +14,8 @@ type Client struct {
 	// to an EPP server.
 	TLSConfig *tls.Config
 
+	DialerConfig *net.Dialer
+
 	// conn holds the TCP connection to the server.
 	conn net.Conn
 }
@@ -24,7 +26,11 @@ func (c *Client) Connect(server string) ([]byte, error) {
 		c.TLSConfig = &tls.Config{}
 	}
 
-	conn, err := tls.Dial("tcp", server, c.TLSConfig)
+	if c.DialerConfig == nil {
+		c.DialerConfig = &net.Dialer{}
+	}
+
+	conn, err := tls.DialWithDialer(c.DialerConfig, "tcp", server, c.TLSConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +55,7 @@ func (c *Client) Send(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	_ = c.conn.SetReadDeadline(time.Now().Add(2 * time.Second))
+	_ = c.conn.SetReadDeadline(time.Now().Add(60 * time.Second))
 	msg, err := ReadMessage(c.conn)
 	if err != nil {
 		_ = c.conn.Close()
