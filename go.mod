@@ -1,6 +1,6 @@
-module github.com/bombsimon/epp-go
+module github.com/dzehv/epp-go
 
-go 1.12
+go 1.15
 
 require (
 	aqwari.net/xml v0.0.0-20190411173135-9e2dd5ec99d1
