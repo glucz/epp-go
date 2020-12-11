@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"aqwari.net/xml/xmltree"
-	"github.com/bombsimon/epp-go/types"
+	"github.com/dzehv/epp-go/types"
 	"github.com/pkg/errors"
 )
 

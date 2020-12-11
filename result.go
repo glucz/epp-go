@@ -3,7 +3,7 @@ package epp
 import (
 	"fmt"
 
-	"github.com/bombsimon/epp-go/types"
+	"github.com/dzehv/epp-go/types"
 )
 
 // ResultCode represents a result code from the EPP server.

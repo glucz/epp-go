@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/bombsimon/epp-go/types"
+	"github.com/dzehv/epp-go/types"
 )
 
 // Client represents an EPP client.

@@ -11,10 +11,11 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"net"
 	"os"
 	"time"
 
-	epp "github.com/bombsimon/epp-go"
+	epp "github.com/dzehv/epp-go"
 )
 
 func main() {
@@ -22,6 +23,10 @@ func main() {
 		TLSConfig: &tls.Config{
 			InsecureSkipVerify: true,
 			Certificates:       []tls.Certificate{generateCertificate()},
+		},
+		DialerConfig: &net.Dialer{
+			Timeout:   60 * time.Second,
+			KeepAlive: 60 * time.Second,
 		},
 	}
 
