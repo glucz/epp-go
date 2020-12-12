@@ -12,12 +12,11 @@ import (
 type Client struct {
 	// TLSConfig holds the TLS configuration that will be used when connecting
 	// to an EPP server.
-	TLSConfig *tls.Config
-
+	TLSConfig    *tls.Config
 	DialerConfig *net.Dialer
-
 	// conn holds the TCP connection to the server.
-	conn net.Conn
+	conn    net.Conn
+	Timeout int
 }
 
 // Connect will connect to the server passed as argument.
