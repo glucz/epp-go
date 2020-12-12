@@ -19,12 +19,11 @@ const (
 )
 
 // ReadMessage reads one full message from r.
-func ReadMessage(conn net.Conn) ([]byte, error) {
+func ReadMessage(conn net.Conn, timeout int) ([]byte, error) {
 	// https://tools.ietf.org/html/rfc5734#section-4
 	var totalSize uint32
 
-	err := binary.Read(conn, binary.BigEndian, &totalSize)
-	if err != nil {
+	if err := binary.Read(conn, binary.BigEndian, &totalSize); err != nil {
 		return nil, err
 	}
 
@@ -32,14 +31,12 @@ func ReadMessage(conn net.Conn) ([]byte, error) {
 	contentSize := int(totalSize) - headerSize
 
 	// Ensure a reasonable time for reading the message.
-	err = conn.SetReadDeadline(time.Now().Add(60 * time.Second))
-	if err != nil {
+	if err := conn.SetReadDeadline(time.Now().Add(time.Duration(timeout) * time.Second)); err != nil {
 		return nil, err
 	}
 
 	buf := make([]byte, contentSize)
-	_, err = io.ReadFull(conn, buf)
-	if err != nil {
+	if _, err := io.ReadFull(conn, buf); err != nil {
 		return nil, err
 	}
 
@@ -47,7 +44,7 @@ func ReadMessage(conn net.Conn) ([]byte, error) {
 }
 
 // WriteMessage writes data to w with the correct header.
-func WriteMessage(conn net.Conn, data []byte) error {
+func WriteMessage(conn net.Conn, timeout int, data []byte) error {
 	// Begin by writing the len(b) as Big Endian uint32, including the
 	// size of the content length header.
 	// https://tools.ietf.org/html/rfc5734#section-4
@@ -60,18 +57,15 @@ func WriteMessage(conn net.Conn, data []byte) error {
 		return errors.New("content is too large")
 	}
 
-	err := conn.SetWriteDeadline(time.Now().Add(60 * time.Second))
-	if err != nil {
+	if err := conn.SetWriteDeadline(time.Now().Add(time.Duration(timeout) * time.Second)); err != nil {
 		return err
 	}
 
-	err = binary.Write(conn, binary.BigEndian, uint32(totalSize))
-	if err != nil {
+	if err := binary.Write(conn, binary.BigEndian, uint32(totalSize)); err != nil {
 		return err
 	}
 
-	_, err = conn.Write(data)
-	if err != nil {
+	if _, err := conn.Write(data); err != nil {
 		return err
 	}
 

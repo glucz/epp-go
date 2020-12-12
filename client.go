@@ -46,20 +46,26 @@ func (c *Client) Connect(server string) ([]byte, error) {
 	return greeting, nil
 }
 
+func (c *Client) Close() error {
+	return c.conn.Close()
+}
+
 // Send will send data to the server.
 func (c *Client) Send(data []byte) ([]byte, error) {
-	err := WriteMessage(c.conn, data)
+	err := WriteMessage(c.conn, c.Timeout, data)
 	if err != nil {
-		_ = c.conn.Close()
-
+		c.conn.Close()
 		return nil, err
 	}
 
-	_ = c.conn.SetReadDeadline(time.Now().Add(60 * time.Second))
-	msg, err := ReadMessage(c.conn)
-	if err != nil {
-		_ = c.conn.Close()
+	if err := c.conn.SetReadDeadline(time.Now().Add(time.Duration(c.Timeout) * time.Second)); err != nil {
+		c.conn.Close()
+		return nil, err
+	}
 
+	msg, err := ReadMessage(c.conn, c.Timeout)
+	if err != nil {
+		c.conn.Close()
 		return nil, err
 	}
 
