@@ -112,8 +112,7 @@ func (s *Session) run() error {
 	}
 
 	// Write the greeting on the socket.
-	err = WriteMessage(s.conn, response)
-	if err != nil {
+	if err := WriteMessage(s.conn, 120, response); err != nil {
 		return err
 	}
 
@@ -142,14 +141,14 @@ func (s *Session) run() error {
 
 		// Set the deadlien before reading to one second so we can check for
 		// timeouts and stops each second to do proper timeout handling.
-		err = s.conn.SetDeadline(time.Now().Add(1 * time.Second))
+		err = s.conn.SetDeadline(time.Now().Add(120 * time.Second))
 		if err != nil {
 			return err
 		}
 
 		// Read from the socket and ensure that if we get an error we ignore it
 		// if there were no activity on the socket.
-		message, err := ReadMessage(s.conn)
+		message, err := ReadMessage(s.conn, 120)
 		if err != nil {
 			if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
 				continue
@@ -184,8 +183,7 @@ func (s *Session) run() error {
 		}
 
 		// Write the message on the socket.
-		err = WriteMessage(s.conn, response)
-		if err != nil {
+		if err := WriteMessage(s.conn, 120, response); err != nil {
 			return err
 		}
 

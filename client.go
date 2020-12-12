@@ -35,7 +35,7 @@ func (c *Client) Connect(server string) ([]byte, error) {
 	}
 
 	// Read the greeting.
-	greeting, err := ReadMessage(conn)
+	greeting, err := ReadMessage(conn, c.Timeout)
 	if err != nil {
 		return nil, err
 	}
