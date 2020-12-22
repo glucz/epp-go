@@ -19,7 +19,8 @@ const (
 )
 
 var (
-	connectionError = errors.New("connection error")
+	connectionError   = errors.New("connection error")
+	contentIsTooLarge = errors.New("content is too large")
 )
 
 // ReadMessage reads one full message from r.
@@ -64,7 +65,7 @@ func WriteMessage(conn net.Conn, timeout int, data []byte) error {
 
 	// Bounds check.
 	if totalSize > math.MaxUint32 {
-		return errors.New("content is too large")
+		return contentIsTooLarge
 	}
 
 	if err := conn.SetWriteDeadline(time.Now().Add(time.Duration(timeout) * time.Second)); err != nil {

@@ -40,7 +40,6 @@ func main() {
 	fmt.Println("---- Enter EPP frame terminated by a double newline ----")
 
 	fmt.Println("> Automatic login!")
-	time.Sleep(1 * time.Second)
 
 	response, err := client.Login("some-user", "some-password")
 	if err != nil {
