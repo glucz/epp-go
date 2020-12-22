@@ -18,8 +18,15 @@ const (
 	rootLocalName = "epp"
 )
 
+var (
+	connectionError = errors.New("connection error")
+)
+
 // ReadMessage reads one full message from r.
 func ReadMessage(conn net.Conn, timeout int) ([]byte, error) {
+	if conn == nil {
+		return connectionError
+	}
 	// https://tools.ietf.org/html/rfc5734#section-4
 	var totalSize uint32
 
@@ -45,6 +52,9 @@ func ReadMessage(conn net.Conn, timeout int) ([]byte, error) {
 
 // WriteMessage writes data to w with the correct header.
 func WriteMessage(conn net.Conn, timeout int, data []byte) error {
+	if conn == nil {
+		return connectionError
+	}
 	// Begin by writing the len(b) as Big Endian uint32, including the
 	// size of the content length header.
 	// https://tools.ietf.org/html/rfc5734#section-4
