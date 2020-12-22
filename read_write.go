@@ -25,7 +25,7 @@ var (
 // ReadMessage reads one full message from r.
 func ReadMessage(conn net.Conn, timeout int) ([]byte, error) {
 	if conn == nil {
-		return connectionError
+		return nil, connectionError
 	}
 	// https://tools.ietf.org/html/rfc5734#section-4
 	var totalSize uint32
