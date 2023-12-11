@@ -31,10 +31,10 @@ func main() {
 
 	server := epp.Server{
 		Addr: ":4701",
-		TLSConfig: &tls.Config{
-			Certificates: []tls.Certificate{generateCertificate()},
-			ClientAuth:   tls.RequireAnyClientCert,
-		},
+		//TLSConfig: &tls.Config{
+		//	Certificates: []tls.Certificate{generateCertificate()},
+		//	ClientAuth:   tls.RequireAnyClientCert,
+		//},
 		SessionConfig: epp.SessionConfig{
 			IdleTimeout:    5 * time.Minute,
 			SessionTimeout: 10 * time.Minute,
@@ -70,14 +70,14 @@ func main() {
 }
 
 func greeting(s *epp.Session) ([]byte, error) {
-	err := verifyClientCertificate(s.ConnectionState().PeerCertificates)
-	if err != nil {
-		_ = s.Close()
+	//err := verifyClientCertificate(s.ConnectionState().PeerCertificates)
+	//if err != nil {
+	//	_ = s.Close()
 
-		fmt.Println("could not verify peer certificates")
+	//	fmt.Println("could not verify peer certificates")
 
-		return nil, errors.New("could not verify certificates")
-	}
+	//	return nil, errors.New("could not verify certificates")
+	//}
 
 	greeting := types.EPPGreeting{
 		Greeting: types.Greeting{

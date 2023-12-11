@@ -16,21 +16,21 @@ func TestReadWriteMessage(t *testing.T) {
 
 	go func() {
 		for i := 0; i < 10; i++ {
-			err := WriteMessage(conn1, []byte(fmt.Sprintf("ping %d", i)))
+			err := WriteMessage(conn1, 10, []byte(fmt.Sprintf("ping %d", i)))
 			require.Nil(t, err)
 
-			message, err := ReadMessage(conn1)
+			message, err := ReadMessage(conn1, 10)
 			require.Nil(t, err)
 			assert.Equal(t, fmt.Sprintf("pong %d", i), string(message))
 		}
 	}()
 
 	for i := 0; i < 10; i++ {
-		message, err := ReadMessage(conn2)
+		message, err := ReadMessage(conn2, 10)
 		require.Nil(t, err)
 		assert.Equal(t, fmt.Sprintf("ping %d", i), string(message))
 
-		err = WriteMessage(conn2, []byte(fmt.Sprintf("pong %d", i)))
+		err = WriteMessage(conn2, 10, []byte(fmt.Sprintf("pong %d", i)))
 		require.Nil(t, err)
 	}
 }

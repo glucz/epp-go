@@ -1,7 +1,7 @@
 package epp
 
 import (
-	"crypto/tls"
+	//"crypto/tls"
 	"log"
 	"net"
 	"time"
@@ -53,10 +53,11 @@ type SessionConfig struct {
 type Session struct {
 	// ConnectionState holds the state of the TLS connection initiated while
 	// doing the handshake with the server.
-	ConnectionState func() tls.ConnectionState
+	//ConnectionState func() tls.ConnectionState
 
 	// SessionID is a unique ID to use to identify a specific session.
 	SessionID string
+	AuthID    string
 
 	// conn holds the TCP connection with a client.
 	conn net.Conn
@@ -74,20 +75,20 @@ type Session struct {
 }
 
 // NewSession will create a new Session.
-func NewSession(conn *tls.Conn, cfg SessionConfig) *Session {
+func NewSession(conn net.Conn, cfg SessionConfig) *Session {
 	sessionID := uuid.New().String()
 
 	s := &Session{
-		SessionID:       sessionID,
-		ConnectionState: conn.ConnectionState,
-		conn:            conn,
-		stopChan:        make(chan struct{}),
-		IdleTimeout:     cfg.IdleTimeout,
-		SessionTimeout:  cfg.SessionTimeout,
-		greeting:        cfg.Greeting,
-		handler:         cfg.Handler,
-		onCommands:      cfg.OnCommands,
-		validator:       cfg.Validator,
+		SessionID: sessionID,
+		//ConnectionState: conn.ConnectionState,
+		conn:           conn,
+		stopChan:       make(chan struct{}),
+		IdleTimeout:    cfg.IdleTimeout,
+		SessionTimeout: cfg.SessionTimeout,
+		greeting:       cfg.Greeting,
+		handler:        cfg.Handler,
+		onCommands:     cfg.OnCommands,
+		validator:      cfg.Validator,
 	}
 
 	return s

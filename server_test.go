@@ -16,15 +16,15 @@ import (
 )
 
 func TestServer(t *testing.T) {
-	cert := generateCertificate()
+	//cert := generateCertificate()
 
 	didStart := make(chan struct{})
 
 	srv := Server{
 		Addr: ":9889",
-		TLSConfig: &tls.Config{
-			Certificates: []tls.Certificate{cert},
-		},
+		//TLSConfig: &tls.Config{
+		//	Certificates: []tls.Certificate{cert},
+		//},
 		SessionConfig: SessionConfig{
 			IdleTimeout:    10 * time.Minute,
 			SessionTimeout: 10 * time.Minute,

@@ -1,7 +1,7 @@
 package epp
 
 import (
-	"crypto/tls"
+	//"crypto/tls"
 	"fmt"
 	"log"
 	"net"
@@ -25,7 +25,7 @@ type Server struct {
 
 	// TLSConfig is the server TLS config with configuration such as
 	// certificates, client auth etcetera.
-	TLSConfig *tls.Config
+	//TLSConfig *tls.Config
 
 	// Sessions will contain all the currently active sessions.
 	Sessions map[string]*Session
@@ -77,12 +77,12 @@ func (s *Server) Serve(l *net.TCPListener) error {
 		s.sessionsWg.Wait()
 	}()
 
-	tlsConfig := &tls.Config{}
+	//tlsConfig := &tls.Config{}
 
 	// Use the same TLS config for the session if used on the server.
-	if s.TLSConfig != nil {
-		tlsConfig = s.TLSConfig.Clone()
-	}
+	//if s.TLSConfig != nil {
+	//	tlsConfig = s.TLSConfig.Clone()
+	//}
 
 	// Perform user defined functions to execute each time the server is
 	// started.
@@ -124,22 +124,22 @@ func (s *Server) Serve(l *net.TCPListener) error {
 			continue
 		}
 
-		go s.startSession(conn, tlsConfig)
+		go s.startSession(conn)
 	}
 }
 
-func (s *Server) startSession(conn net.Conn, tlsConfig *tls.Config) {
+func (s *Server) startSession(conn net.Conn) {
 	// Initialize tls.
-	tlsConn := tls.Server(conn, tlsConfig)
+	//tlsConn := tls.Server(conn, tlsConfig)
 
-	err := tlsConn.Handshake()
-	if err != nil {
-		log.Println(err.Error())
+	//err := tlsConn.Handshake()
+	//if err != nil {
+	//	log.Println(err.Error())
 
-		return
-	}
+	//	return
+	//}
 
-	session := NewSession(tlsConn, s.SessionConfig)
+	session := NewSession(conn, s.SessionConfig)
 
 	// Ensure the session is added to our index.
 	s.sessionsWg.Add(1)
@@ -164,9 +164,9 @@ func (s *Server) startSession(conn net.Conn, tlsConfig *tls.Config) {
 
 	log.Println("starting session", session.SessionID)
 
-	if err = session.run(); err != nil {
-		log.Println(err)
-	}
+	//if err = session.run(); err != nil {
+	//	log.Println(err)
+	//}
 }
 
 // Stop will close the channel making no new regquests being processed and then
