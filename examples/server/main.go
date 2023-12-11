@@ -17,8 +17,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	epp "github.com/dzehv/epp-go"
-	"github.com/dzehv/epp-go/types"
+	epp "github.com/glucz/epp-go"
+	"github.com/glucz/epp-go/types"
 )
 
 func main() {

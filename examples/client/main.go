@@ -15,7 +15,7 @@ import (
 	"os"
 	"time"
 
-	epp "github.com/dzehv/epp-go"
+	epp "github.com/glucz/epp-go"
 )
 
 func main() {

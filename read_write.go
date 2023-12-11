@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"aqwari.net/xml/xmltree"
-	"github.com/dzehv/epp-go/types"
+	"github.com/glucz/epp-go/types"
 )
 
 const (

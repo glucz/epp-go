@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"aqwari.net/xml/xmltree"
-	"github.com/dzehv/epp-go/types"
+	"github.com/glucz/epp-go/types"
 	"github.com/pkg/errors"
 )
 
@@ -13,14 +13,14 @@ const nsEPP = "urn:ietf:params:xml:ns:epp-1.0"
 // Mux can be used to route different EPP messages to different handlers,
 // depending on the message content.
 //
-//  m := Mux{}
+//	m := Mux{}
 //
-//  m.AddNamespaceAlias("urn:ietf:params:xml:ns:domain-1.0", "domain")
+//	m.AddNamespaceAlias("urn:ietf:params:xml:ns:domain-1.0", "domain")
 //
-//  m.AddHandler("hello", handleHello)
-//  m.AddHandler("command/login", handleLogin)
-//  m.AddHandler("command/check/urn:ietf:params:xml:ns:contact-1.0", handleCheckContact)
-//  m.AddHandler("command/check/domain", handleCheckDomain)
+//	m.AddHandler("hello", handleHello)
+//	m.AddHandler("command/login", handleLogin)
+//	m.AddHandler("command/check/urn:ietf:params:xml:ns:contact-1.0", handleCheckContact)
+//	m.AddHandler("command/check/domain", handleCheckDomain)
 type Mux struct {
 	handlers         map[string]HandlerFunc
 	namespaceAliases map[string]string
@@ -43,8 +43,9 @@ func NewMux() *Mux {
 // AddNamespaceAlias will add an alias for the specified namespace. After the
 // alias is added it can be used in routing. Multiple namespaces can be added
 // to the same alias.
-//  m.AddNamespaceAlias("urn:ietf:params:xml:ns:contact-1.0", "host-and-contact")
-//  m.AddNamespaceAlias("urn:ietf:params:xml:ns:host-1.0", "host-and-contact")
+//
+//	m.AddNamespaceAlias("urn:ietf:params:xml:ns:contact-1.0", "host-and-contact")
+//	m.AddNamespaceAlias("urn:ietf:params:xml:ns:host-1.0", "host-and-contact")
 func (m *Mux) AddNamespaceAlias(ns, alias string) {
 	m.namespaceAliases[ns] = alias
 }

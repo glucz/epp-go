@@ -6,7 +6,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/dzehv/epp-go/types"
+	"github.com/glucz/epp-go/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

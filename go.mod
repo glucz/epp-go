@@ -1,4 +1,4 @@
-module github.com/dzehv/epp-go
+module github.com/glucz/epp-go
 
 go 1.15
 
