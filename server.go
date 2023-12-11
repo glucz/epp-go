@@ -164,9 +164,9 @@ func (s *Server) startSession(conn net.Conn) {
 
 	log.Println("starting session", session.SessionID)
 
-	//if err = session.run(); err != nil {
-	//	log.Println(err)
-	//}
+	if err := session.run(); err != nil {
+		log.Println(err)
+	}
 }
 
 // Stop will close the channel making no new regquests being processed and then
