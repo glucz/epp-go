@@ -12,11 +12,20 @@ verification methods.
 
 // Name space constants for the default name spaces
 const (
-	NameSpaceContact = "urn:ietf:params:xml:ns:contact-1.0"
-	NameSpaceDomain  = "urn:ietf:params:xml:ns:domain-1.0"
-	NameSpaceEPP10   = "urn:ietf:params:xml:ns:epp-1.0"
-	NameSpaceHost    = "urn:ietf:params:xml:ns:host-1.0"
+	NameSpaceContact    = "urn:ietf:params:xml:ns:contact-1.0"
+	NameSpaceDomain     = "urn:ietf:params:xml:ns:domain-1.0"
+	NameSpaceContactExt = "http://www.domain.hu/xml/epp/contact-ext-ngDRR-1.0"
+	NameSpaceDomainExt  = "http://www.domain.hu/xml/epp/domain-ext-ngDRR-1.0"
+	NameSpacePoll       = "http://www.domain.hu/xml/epp/poll-ngDRR-1.0"
+	NameSpaceAuthInfo   = "http://www.domain.hu/xml/epp/authInfo-ngDRR-1.0"
+	NameSpaceEPP10      = "urn:ietf:params:xml:ns:epp-1.0"
+	NameSpaceHost       = "urn:ietf:params:xml:ns:host-1.0"
 )
+
+type NgDRRerr struct {
+	ErrCode int
+	ErrMess string
+}
 
 // AliasToNameSpace space will return the full name sapce for a name space alias.
 func AliasToNameSpace(alias string) string {
@@ -25,6 +34,10 @@ func AliasToNameSpace(alias string) string {
 		return NameSpaceContact
 	case "domain":
 		return NameSpaceDomain
+	case "domainExt":
+		return NameSpaceDomainExt
+	case "contactExt":
+		return NameSpaceContactExt
 	case "host":
 		return NameSpaceHost
 	}
