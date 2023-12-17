@@ -163,12 +163,16 @@ func Encode(data interface{}, xmlAttributes []xml.Attr) ([]byte, error) {
 // to all child nodes. The alias will only be setup for the root element.
 func addNameSpaceAlias(document *xmltree.Element, nsAdded bool) *xmltree.Element {
 	namespaceAliases := map[string]string{
-		types.NameSpaceDomain:   "domain",
-		types.NameSpaceHost:     "host",
-		types.NameSpaceContact:  "contact",
-		types.NameSpaceDNSSEC10: "sed",
-		types.NameSpaceDNSSEC11: "sec",
-		types.NameSpaceIIS12:    "iis",
+		types.NameSpaceDomain:     "domain",
+		types.NameSpaceHost:       "host",
+		types.NameSpaceContact:    "contact",
+		types.NameSpaceDNSSEC10:   "sed",
+		types.NameSpaceDNSSEC11:   "sec",
+		types.NameSpaceIIS12:      "iis",
+		types.NameSpaceContactExt: "contactExt",
+		types.NameSpaceDomainExt:  "domainExt",
+		types.NameSpacePoll:       "poll",
+		types.NameSpaceAuthInfo:   "authInfo",
 	}
 
 	if document.Name.Space != "" {
